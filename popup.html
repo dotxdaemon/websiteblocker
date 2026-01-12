@@ -1,0 +1,21 @@
+<!-- ABOUTME: Renders the popup controls and status for the extension. -->
+<!-- ABOUTME: Allows quick rule additions and shows blocked counts. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Result Blocker</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <h1>Result Blocker</h1>
+      <p class="status" id="status">Checking current tab...</p>
+      <button id="blockButton" type="button">Block this site</button>
+      <p class="count" id="blockedCount">Blocked 0 results on this page.</p>
+    </main>
+    <script src="utils.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
