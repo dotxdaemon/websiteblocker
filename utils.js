@@ -145,8 +145,19 @@ const BlockerRules = (() => {
     return false;
   };
 
+  const filterAnchorsForRules = (anchors, rules) => {
+    if (!Array.isArray(anchors) || anchors.length === 0) {
+      return [];
+    }
+    if (!Array.isArray(rules) || rules.length === 0) {
+      return [];
+    }
+    return anchors.filter((anchor) => Boolean(shouldBlock(anchor?.href, rules)));
+  };
+
   return {
     decodeGoogleUrl,
+    filterAnchorsForRules,
     getDomainFromUrl,
     parseRuleLine,
     parseRulesFromText,

@@ -1,7 +1,7 @@
 // ABOUTME: Exercises rule parsing and URL matching behavior.
 // ABOUTME: Uses Node asserts to validate utils.js without browser APIs.
 const assert = require('assert');
-const { shouldBlock, decodeGoogleUrl } = require('../utils');
+const { shouldBlock, decodeGoogleUrl, filterAnchorsForRules } = require('../utils');
 
 const rules = [
   'example.com',
@@ -44,5 +44,15 @@ const decoded = decodeGoogleUrl(
   'https://www.google.com/url?q=https://www.reddit.com/r/test&sa=U&ved=0'
 );
 assert.strictEqual(decoded, 'https://www.reddit.com/r/test');
+
+const anchors = [
+  { href: 'https://www.reddit.com/r/javascript' },
+  { href: 'https://example.com' },
+  { href: '' },
+];
+const anchorRules = ['contains:reddit'];
+assert.deepStrictEqual(filterAnchorsForRules(anchors, anchorRules), [
+  anchors[0],
+]);
 
 console.log('All utils tests passed.');
