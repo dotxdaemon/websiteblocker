@@ -15,7 +15,7 @@ let settings = { ...defaultSettings };
 let rules = [];
 let blockedCount = 0;
 
-const processedAnchors = new WeakSet();
+let processedAnchors = new WeakSet();
 const pendingAnchors = new Set();
 let pendingHandle = null;
 
@@ -333,7 +333,7 @@ const observeMutations = () => {
 };
 
 const refreshAll = () => {
-  processedAnchors.clear();
+  processedAnchors = new WeakSet();
   queueAnchors(document.body);
 };
 
@@ -389,6 +389,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse({ domain: BlockerRules.getDomainFromUrl(window.location.href) });
   }
 });
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    refreshAll,
+  };
+}
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initialize, { once: true });
