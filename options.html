@@ -1,0 +1,60 @@
+<!-- ABOUTME: Provides the options UI for managing block rules and settings. -->
+<!-- ABOUTME: Offers validation feedback and debug controls for diagnostics. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Result Blocker Options</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header>
+        <h1>Result Blocker</h1>
+        <p>Manage your rules and filtering behavior.</p>
+      </header>
+
+      <section class="panel">
+        <h2>Block Rules</h2>
+        <p>One rule per line. Supports domain, contains:, and regex: formats.</p>
+        <div class="rules-editor">
+          <pre id="rulesHighlight" aria-hidden="true"></pre>
+          <textarea id="rulesInput" spellcheck="false"></textarea>
+        </div>
+        <div class="rules-errors" id="rulesErrors" aria-live="polite"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Settings</h2>
+        <div class="toggle-row">
+          <label>
+            <input type="checkbox" id="enabledToggle" />
+            Enabled
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label>
+            <input type="checkbox" id="strictToggle" />
+            Strict Mode (block if any URL in the result matches)
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label>
+            <input type="checkbox" id="debugToggle" />
+            Debug Mode (log containers and URLs)
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label for="displayMode">Display Mode</label>
+          <select id="displayMode">
+            <option value="hide">Hide</option>
+            <option value="blur">Blur</option>
+          </select>
+        </div>
+      </section>
+    </main>
+    <script src="utils.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
