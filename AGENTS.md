@@ -108,7 +108,6 @@ If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or i
 ## Version control
 
 - If the project isn't in a git repo, stop and ask permission to initialize one.
-- You must stop and ask how to handle uncommitted changes or untracked files when starting work. Suggest committing existing work first.
 - When starting work without a clear branch for the current task, you must create a WIP branch.
 - You must track all non-trivial changes in git.
 - You must commit frequently throughout the development process, even if your high-level tasks are not yet done. Commit your journal entries.
