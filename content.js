@@ -190,11 +190,19 @@ const findResultContainer = (anchorElement) => {
 
 const collectCandidateAnchors = (root) => {
   const anchors = [];
+  const seenAnchors = new Set();
+  const addAnchor = (anchor) => {
+    if (!anchor || seenAnchors.has(anchor)) {
+      return;
+    }
+    anchors.push(anchor);
+    seenAnchors.add(anchor);
+  };
   const headingAnchors = root.querySelectorAll('a[href] h3');
   headingAnchors.forEach((heading) => {
     const anchor = heading.closest('a[href]');
     if (anchor && isVisible(heading)) {
-      anchors.push(anchor);
+      addAnchor(anchor);
     }
   });
 
@@ -217,7 +225,15 @@ const collectCandidateAnchors = (root) => {
       }
     })();
     if (parsed && parsed.pathname.includes('imgres')) {
-      anchors.push(anchor);
+      addAnchor(anchor);
+    }
+  });
+
+  const allAnchors = Array.from(root.querySelectorAll('a[href]'));
+  const ruleAnchors = BlockerRules.filterAnchorsForRules(allAnchors, rules);
+  ruleAnchors.forEach((anchor) => {
+    if (isVisible(anchor)) {
+      addAnchor(anchor);
     }
   });
 
