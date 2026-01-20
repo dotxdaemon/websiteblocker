@@ -169,7 +169,8 @@ const findResultContainer = (anchorElement) => {
         }
         const hasHeading = current.querySelector('h3');
         const hasAnchor = current.querySelector('a[href]');
-        if (hasHeading && hasAnchor && current !== anchorElement) {
+        const headingCount = current.querySelectorAll('h3').length;
+        if (hasHeading && hasAnchor && headingCount === 1 && current !== anchorElement) {
           candidate = current;
         }
       }
