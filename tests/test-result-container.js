@@ -74,6 +74,36 @@ const container = findResultContainer(anchor);
 
 assert.strictEqual(container?.id, 'result');
 
+const multiDom = new JSDOM(`<!doctype html>
+  <html>
+    <body>
+      <div id="results">
+        <div class="g" id="result-one">
+          <div class="yuRUbf">
+            <a href="https://blocked.example.com">
+              <h3>Blocked Result</h3>
+            </a>
+          </div>
+        </div>
+        <div class="g" id="result-two">
+          <div class="yuRUbf">
+            <a href="https://allowed.example.com">
+              <h3>Allowed Result</h3>
+            </a>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>`);
+
+multiDom.window.document.readyState = 'loading';
+setupGlobals(multiDom);
+
+const multiAnchor = multiDom.window.document.querySelector('#result-two a[href]');
+const multiContainer = findResultContainer(multiAnchor);
+
+assert.strictEqual(multiContainer?.id, 'result-two');
+
 const imageDom = new JSDOM(`<!doctype html>
   <html>
     <body>
