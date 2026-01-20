@@ -158,13 +158,15 @@ const isVisible = (element) => {
 
 const findResultContainer = (anchorElement) => {
   let current = anchorElement;
-  let lastBlock = null;
+  let closestBlock = null;
   let candidate = null;
   let depth = 0;
   while (current && current !== document.body && depth < 10) {
     if (current instanceof HTMLElement) {
       if (['DIV', 'ARTICLE', 'LI'].includes(current.tagName)) {
-        lastBlock = current;
+        if (!closestBlock) {
+          closestBlock = current;
+        }
         const hasHeading = current.querySelector('h3');
         const hasAnchor = current.querySelector('a[href]');
         if (hasHeading && hasAnchor && current !== anchorElement) {
@@ -180,9 +182,9 @@ const findResultContainer = (anchorElement) => {
     logDebug('Container found', candidate);
     return candidate;
   }
-  if (lastBlock) {
+  if (closestBlock) {
     logWarning('Falling back to closest block for anchor', anchorElement);
-    return lastBlock;
+    return closestBlock;
   }
 
   const fallback = anchorElement.closest('div') || anchorElement.parentElement;

@@ -4,6 +4,7 @@ const assert = require('assert');
 const { JSDOM } = require('jsdom');
 
 const setupGlobals = (dom) => {
+  global.console = { ...console, warn() {} };
   global.window = dom.window;
   global.document = dom.window.document;
   global.Element = dom.window.Element;
@@ -72,5 +73,26 @@ const anchor = dom.window.document.querySelector('a[href]');
 const container = findResultContainer(anchor);
 
 assert.strictEqual(container?.id, 'result');
+
+const imageDom = new JSDOM(`<!doctype html>
+  <html>
+    <body>
+      <div class="grid" id="grid">
+        <div class="tile" id="tile">
+          <a href="https://www.google.com/imgres?imgurl=https://images.example.com/cat.jpg">
+            <img src="https://images.example.com/cat.jpg" alt="Cat" />
+          </a>
+        </div>
+      </div>
+    </body>
+  </html>`);
+
+imageDom.window.document.readyState = 'loading';
+setupGlobals(imageDom);
+
+const imageAnchor = imageDom.window.document.querySelector('a[href]');
+const imageContainer = findResultContainer(imageAnchor);
+
+assert.strictEqual(imageContainer?.id, 'tile');
 
 console.log('Result container tests passed.');
