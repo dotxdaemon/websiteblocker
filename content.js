@@ -159,23 +159,27 @@ const isVisible = (element) => {
 const findResultContainer = (anchorElement) => {
   let current = anchorElement;
   let lastBlock = null;
+  let candidate = null;
   let depth = 0;
   while (current && current !== document.body && depth < 10) {
     if (current instanceof HTMLElement) {
       if (['DIV', 'ARTICLE', 'LI'].includes(current.tagName)) {
         lastBlock = current;
-      }
-      const hasHeading = current.querySelector('h3');
-      const hasAnchor = current.querySelector('a[href]');
-      if (hasHeading && hasAnchor && current !== anchorElement) {
-        logDebug('Container found', current);
-        return current;
+        const hasHeading = current.querySelector('h3');
+        const hasAnchor = current.querySelector('a[href]');
+        if (hasHeading && hasAnchor && current !== anchorElement) {
+          candidate = current;
+        }
       }
     }
     current = current.parentElement;
     depth += 1;
   }
 
+  if (candidate) {
+    logDebug('Container found', candidate);
+    return candidate;
+  }
   if (lastBlock) {
     logWarning('Falling back to closest block for anchor', anchorElement);
     return lastBlock;
@@ -393,6 +397,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     refreshAll,
+    findResultContainer,
   };
 }
 
