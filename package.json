@@ -1,0 +1,14 @@
+{
+  "name": "websiteblocker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "node tests/test-content.js && node tests/test-utils.js && node tests/test-manifest.js && node tests/test-result-container.js",
+    "lint": "node tests/test-lint.js",
+    "typecheck": "node tests/test-typecheck.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}
